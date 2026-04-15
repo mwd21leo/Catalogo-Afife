@@ -649,7 +649,7 @@ function renderizar() {
         html += '<div class="card" data-idx="' + idx + '">';
         html += '<div class="card-img-wrap">';
         html += '<span class="badge-novo">' + diasAtras(p.criadoEm) + '</span>';
-        html += '<img src="' + p.thumb + '" alt="' + p.nome + '" loading="lazy" onerror="this.parentNode.innerHTML='<div class=card-img-placeholder>Sem imagem</div>'">';
+        html += '<img src="' + p.thumb + '" alt="' + p.nome + '" loading="lazy" onerror="imgErr(this)">';
         html += '</div><div class="card-info">';
         html += '<p class="card-nome">' + p.nome + '</p>';
         html += '<p class="card-fornecedor">' + p.fornecedor + '</p>';
@@ -673,7 +673,7 @@ function renderizar() {
         produtosFiltrados.push(p);
         html += '<div class="card" data-idx="' + idx + '">';
         html += '<div class="card-img-wrap">';
-        html += '<img src="' + p.thumb + '" alt="' + p.nome + '" loading="lazy" onerror="this.parentNode.innerHTML='<div class=card-img-placeholder>Sem imagem</div>'">';
+        html += '<img src="' + p.thumb + '" alt="' + p.nome + '" loading="lazy" onerror="imgErr(this)">';
         html += '</div><div class="card-info"><p class="card-nome">' + p.nome + '</p></div>';
         html += '</div>';
       });
@@ -728,6 +728,7 @@ document.addEventListener("keydown", function(e) {
 });
 document.getElementById("busca").addEventListener("input", renderizar);
 
+function imgErr(el){el.style.display="none";}
 function mostrarErro(msg) {
   document.getElementById("loading").style.display = "none";
   document.getElementById("erro").style.display = "block";
