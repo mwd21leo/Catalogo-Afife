@@ -33,6 +33,7 @@
     min-height: 100vh;
   }
 
+  /* HEADER */
   header {
     background: var(--white);
     border-bottom: 3px solid var(--red);
@@ -85,6 +86,7 @@
     margin-top: 2px;
   }
 
+  /* CONTROLES */
   .controls {
     background: var(--white);
     border-bottom: 1px solid var(--border);
@@ -101,7 +103,7 @@
 
   .search-wrap {
     flex: 1;
-    min-width: 200px;
+    min-width: 180px;
     position: relative;
   }
 
@@ -129,7 +131,12 @@
   .search-wrap input:focus { border-color: var(--red); }
   .search-wrap input::placeholder { color: var(--gray-light); }
 
-  .filter-tabs { display: flex; gap: 0.5rem; flex-wrap: wrap; }
+  /* FILTROS — desktop: pills, mobile: select */
+  .filter-tabs {
+    display: flex;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+  }
 
   .tab {
     padding: 6px 14px;
@@ -149,13 +156,40 @@
 
   .tab:hover { border-color: var(--red); color: var(--red); }
   .tab.ativo { background: var(--red); color: var(--white); border-color: var(--red); }
-
   .tab-novidades { border-color: var(--yellow); color: var(--yellow); }
-  .tab-novidades:hover { border-color: var(--yellow); background: var(--yellow-bg); }
+  .tab-novidades:hover { background: var(--yellow-bg); }
   .tab-novidades.ativo { background: var(--yellow); color: var(--white); border-color: var(--yellow); }
 
+  /* Select para mobile */
+  .filter-select {
+    display: none;
+    padding: 8px 12px;
+    background: var(--bg);
+    border: 1px solid var(--border-strong);
+    border-radius: 6px;
+    font-family: "Nunito Sans", sans-serif;
+    font-size: 13px;
+    color: var(--ink);
+    outline: none;
+    cursor: pointer;
+    min-width: 160px;
+  }
+
+  .filter-select:focus { border-color: var(--red); }
+
+  @media (max-width: 640px) {
+    .filter-tabs { display: none; }
+    .filter-select { display: block; }
+    header { padding: 1rem 1.25rem; }
+    .header-center { display: none; }
+    .controls { padding: 0.75rem 1.25rem; gap: 0.75rem; }
+    main { padding: 1.25rem; }
+  }
+
+  /* MAIN */
   main { padding: 2.5rem; }
 
+  /* BANNER NOVIDADES */
   .banner-novidades {
     background: var(--yellow-bg);
     border: 1px solid #e8d870;
@@ -183,6 +217,7 @@
     letter-spacing: 0;
   }
 
+  /* SECAO */
   .secao-fornecedor { margin-bottom: 3.5rem; }
 
   .secao-header {
@@ -215,12 +250,18 @@
     border-radius: 20px;
   }
 
+  /* GRID */
   .grid {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
     gap: 1.25rem;
   }
 
+  @media (max-width: 640px) {
+    .grid { grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); gap: 1rem; }
+  }
+
+  /* CARD */
   .card {
     cursor: pointer;
     border-radius: 10px;
@@ -301,15 +342,16 @@
     margin-top: 3px;
   }
 
+  /* LIGHTBOX */
   .lightbox {
     display: none;
     position: fixed;
     inset: 0;
-    background: rgba(0,0,0,0.75);
+    background: rgba(0,0,0,0.82);
     z-index: 1000;
     align-items: center;
     justify-content: center;
-    padding: 2rem;
+    padding: 1.5rem;
   }
 
   .lightbox.aberto { display: flex; }
@@ -322,7 +364,7 @@
     background: var(--white);
     border-radius: 12px;
     overflow: hidden;
-    box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+    box-shadow: 0 20px 60px rgba(0,0,0,0.4);
   }
 
   .lightbox-img-wrap {
@@ -417,6 +459,13 @@
 
   .btn-fechar:hover { opacity: 1; }
 
+  @media (max-width: 640px) {
+    .lightbox-inner { flex-direction: column; max-width: 95vw; max-height: 92vh; }
+    .lightbox-img-wrap { max-width: 100%; max-height: 55vh; }
+    .lightbox-info { width: 100%; padding: 1rem 1.25rem; border-left: none; border-top: 1px solid var(--border); }
+  }
+
+  /* ESTADOS */
   #loading { text-align: center; padding: 6rem 2rem; }
 
   .loading-text {
@@ -445,23 +494,13 @@
     letter-spacing: 0.1em;
     grid-column: 1/-1;
   }
-
-  @media (max-width: 768px) {
-    header { padding: 1.25rem 1.5rem; }
-    .controls { padding: 1rem 1.5rem; }
-    main { padding: 1.5rem; }
-    .grid { grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); gap: 1rem; }
-    .lightbox-inner { flex-direction: column; max-width: 95vw; }
-    .lightbox-img-wrap { max-width: 100%; max-height: 55vh; }
-    .lightbox-info { width: 100%; padding: 1.25rem; border-left: none; border-top: 1px solid var(--border); }
-  }
 </style>
 </head>
 <body>
 
 <header>
   <div class="header-logo">
-    <img src="./Afife_Main_Logo_2400x1800_high_resolution.jpg" alt="Afife">
+    <img src="./logo-afife.jpg" alt="Afife">
   </div>
   <div class="header-center">
     <p>⚠ Preços sujeitos a alteração</p>
@@ -479,6 +518,7 @@
     <input type="text" id="busca" placeholder="Buscar produto..." autocomplete="off">
   </div>
   <div class="filter-tabs" id="filter-tabs"></div>
+  <select class="filter-select" id="filter-select"></select>
 </div>
 
 <main>
@@ -512,17 +552,13 @@
 </div>
 
 <script>
-var SCRIPT_URL = "https://script.googleusercontent.com/macros/echo?user_content_key=AWDtjMVzN80MrEzxo6kjTNKR5MTiPCUGTeOlrEWaJ_XuCd4W_eR5eJk3EgSYOkgJSjiJHgVDsVAbaW_8OpVSVBwIKr9_jrIJLvskjMcZQU75_tPWFOjY5bU0Ou6GPNpV7t1pjwFBlNYB8lB7iRvGm7lS8_F5VSu6pTXDhcs5Av7_-d7hoz8H8KewWXXho3gVC2wZ-QjxtBeuHu4Vj3WWZtzoLpLgkPx2R9zBy8569hctNjop-b1kCBPhsX1rUVkzn6j6mKz_nnE6AdL2w9Zd3IA&lib=M_FB4mz8dZ14c5S-JV9knZJo6kVphDqUk";
+var SCRIPT_URL = "https://script.google.com/macros/s/AKfycbwDoGXKADH83e4EPlMNccDY72-n5_5cXXT66tLOa6hy6fzLuYz-x97MtWt5FBei6vI/exec";
 
 var dadosCatalogo = [];
 var novidades = [];
 var produtosFiltrados = [];
 var idxAtual = 0;
 var modoAtivo = "todos";
-
-function imgError(el) {
-  el.parentNode.innerHTML = '<div class="card-img-placeholder">Sem imagem</div>';
-}
 
 function init() {
   if (SCRIPT_URL === "COLE_A_URL_DO_APPS_SCRIPT_AQUI") {
@@ -535,7 +571,7 @@ function init() {
       dadosCatalogo = dados.fornecedores;
       novidades = dados.novidades;
       document.getElementById("meta-data").textContent = dados.atualizado;
-      construirTabs();
+      construirFiltros();
       renderizar();
       document.getElementById("loading").style.display = "none";
       document.getElementById("controls").style.display = "flex";
@@ -543,7 +579,8 @@ function init() {
     .catch(function(e) { mostrarErro(e.message); });
 }
 
-function construirTabs() {
+function construirFiltros() {
+  // Pills desktop
   var tabs = document.getElementById("filter-tabs");
   var html = '<button class="tab tab-novidades" data-f="novidades">★ Novidades</button>';
   html += '<button class="tab ativo" data-f="todos">Todos</button>';
@@ -557,6 +594,26 @@ function construirTabs() {
     document.querySelectorAll(".tab").forEach(function(t) { t.classList.remove("ativo"); });
     btn.classList.add("ativo");
     modoAtivo = btn.dataset.f;
+    document.getElementById("busca").value = "";
+    // Sincroniza select
+    document.getElementById("filter-select").value = modoAtivo;
+    renderizar();
+  });
+
+  // Select mobile
+  var sel = document.getElementById("filter-select");
+  var opts = '<option value="novidades">★ Novidades</option>';
+  opts += '<option value="todos" selected>Todos os fornecedores</option>';
+  dadosCatalogo.forEach(function(f) {
+    opts += '<option value="' + f.nome + '">' + f.nome + '</option>';
+  });
+  sel.innerHTML = opts;
+  sel.addEventListener("change", function() {
+    modoAtivo = sel.value;
+    // Sincroniza tabs
+    document.querySelectorAll(".tab").forEach(function(t) {
+      t.classList.toggle("ativo", t.dataset.f === modoAtivo);
+    });
     document.getElementById("busca").value = "";
     renderizar();
   });
@@ -584,7 +641,7 @@ function renderizar() {
     if (lista.length === 0) {
       html = '<div class="grid"><p class="sem-resultados">Nenhum produto encontrado.</p></div>';
     } else {
-      html += '<div class="banner-novidades"><p>★ Chegadas mais recentes <span>— ordenado por data de entrada no catálogo</span></p></div>';
+      html += '<div class="banner-novidades"><p>★ Chegadas mais recentes <span>— do mais recente ao mais antigo</span></p></div>';
       html += '<div class="grid">';
       lista.forEach(function(p) {
         var idx = produtosFiltrados.length;
@@ -592,16 +649,14 @@ function renderizar() {
         html += '<div class="card" data-idx="' + idx + '">';
         html += '<div class="card-img-wrap">';
         html += '<span class="badge-novo">' + diasAtras(p.criadoEm) + '</span>';
-        html += '<img src="' + p.thumb + '" alt="' + p.nome + '" loading="lazy" onerror="imgError(this)">';
-        html += '</div>';
-        html += '<div class="card-info">';
+        html += '<img src="' + p.thumb + '" alt="' + p.nome + '" loading="lazy" onerror="this.parentNode.innerHTML='<div class=card-img-placeholder>Sem imagem</div>'">';
+        html += '</div><div class="card-info">';
         html += '<p class="card-nome">' + p.nome + '</p>';
         html += '<p class="card-fornecedor">' + p.fornecedor + '</p>';
         html += '</div></div>';
       });
       html += '</div>';
     }
-
   } else {
     dadosCatalogo.forEach(function(f) {
       if (modoAtivo !== "todos" && f.nome !== modoAtivo) return;
@@ -618,9 +673,8 @@ function renderizar() {
         produtosFiltrados.push(p);
         html += '<div class="card" data-idx="' + idx + '">';
         html += '<div class="card-img-wrap">';
-        html += '<img src="' + p.thumb + '" alt="' + p.nome + '" loading="lazy" onerror="imgError(this)">';
-        html += '</div>';
-        html += '<div class="card-info"><p class="card-nome">' + p.nome + '</p></div>';
+        html += '<img src="' + p.thumb + '" alt="' + p.nome + '" loading="lazy" onerror="this.parentNode.innerHTML='<div class=card-img-placeholder>Sem imagem</div>'">';
+        html += '</div><div class="card-info"><p class="card-nome">' + p.nome + '</p></div>';
         html += '</div>';
       });
       html += '</div></section>';
@@ -651,6 +705,7 @@ function abrirLightbox(idx) {
 
 function fecharLightbox() {
   document.getElementById("lightbox").classList.remove("aberto");
+  document.getElementById("lb-img").src = "";
 }
 
 document.getElementById("btn-fechar").addEventListener("click", fecharLightbox);
